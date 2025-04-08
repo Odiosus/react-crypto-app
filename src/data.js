@@ -1,5 +1,6 @@
 // Инфо: https://openapi.coinstats.app
 
+// актуальные данные об имеющейся валюте
 export const cryptoData = {
   result:[
     {
@@ -611,6 +612,7 @@ export const cryptoData = {
   },
 }
 
+// купленная валюта на текущий момент
 export const cryptoAssets = [
   {
     id:'bitcoin',

@@ -1,6 +1,7 @@
+// поменять промисы на обычный фетч на сервак
 import { cryptoAssets, cryptoData } from "./data.js";
 
-// поменять промисы на обычный фетч на сервак
+// запрос данных о криптовалютах и их текущей стоимости
 export default function fakeFetchCrypto() {
   return new Promise(resolve => {
     setTimeout(() => {
@@ -9,6 +10,7 @@ export default function fakeFetchCrypto() {
   })
 }
 
+// запрос данных о криптовалютах в портфеле
 export default function fetchAssets() {
   return new Promise(resolve => {
     setTimeout(() => {
