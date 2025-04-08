@@ -1,5 +1,9 @@
 import { Layout, Card, Statistic, List, Typography } from "antd";
 import { ArrowUpOutlined, ArrowDownOutlined } from '@ant-design/icons';
+import { useEffect, useState } from "react";
+import { cryptoData } from "../../data.js";
+import fakeFetchCrypto from "../../api.js";
+import fetchAssets from "../../api.js";
 
 const data = [
   'Racing car sprays burning fuel into crowd.',
@@ -19,6 +23,27 @@ const siderCard = {
 
 // компонент сайдбара
 export default function AppSider() {
+
+  // лоадер пока загружаются данные и ассеты
+  const [loading, setLoading] = useState(false)
+  // массив с инфой с данными
+  const [crypto, setCrypto] = useState()
+  // массив с инфой с ассетами
+  const [assets, setAssets] = useState()
+  
+  useEffect(() => {
+    // запрашиваем загрузку данных актуальных (данные) и имеющихся валют (ассеты)
+    async function preloadCryptoData() {
+      setLoading(true)
+      const {result} = await fakeFetchCrypto()
+      const assets = await fetchAssets()
+      setAssets(assets)
+      setCrypto(result)
+      setLoading(false)
+    }
+    preloadCryptoData()
+  }, []);
+
   return (
     <Layout.Sider
       width = "25%"
