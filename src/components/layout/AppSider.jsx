@@ -1,11 +1,17 @@
-import { Layout, Card, Statistic } from "antd";
+import { Layout, Card, Statistic, List, Typography } from "antd";
 import { ArrowUpOutlined, ArrowDownOutlined } from '@ant-design/icons';
 
+const data = [
+  'Racing car sprays burning fuel into crowd.',
+  'Japanese princess to wed commoner.',
+  'Australian walks 100km after outback crash.',
+  'Man charged over missing wedding girl.',
+  'Los Angeles battles huge wildfires.',
+];
 
 const siderStyle = {
   padding:'1rem',
 };
-
 const siderCard = {
   marginBottom:'1rem',
 }
@@ -26,6 +32,15 @@ export default function AppSider() {
           valueStyle = {{color:'#3f8600'}}
           prefix = {<ArrowUpOutlined/>}
           suffix = "%"
+        />
+        <List
+          size="small"
+          dataSource = {data}
+          renderItem = {(item) => (
+            <List.Item>
+              <Typography.Text mark>[ITEM]</Typography.Text> {item}
+            </List.Item>
+          )}
         />
       </Card>
 
