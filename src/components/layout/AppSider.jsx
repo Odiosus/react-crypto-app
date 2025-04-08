@@ -1,9 +1,9 @@
-import { Layout, Card, Statistic, List, Typography } from "antd";
+import { Layout, Card, Statistic, List, Typography, Spin } from "antd";
 import { ArrowUpOutlined, ArrowDownOutlined } from '@ant-design/icons';
 import { useEffect, useState } from "react";
-import { cryptoData } from "../../data.js";
-import fakeFetchCrypto from "../../api.js";
-import fetchAssets from "../../api.js";
+import { fakeFetchCrypto, fetchAssets } from "../../api.js";
+import percentDifference from "../../utils.js";
+
 
 const data = [
   'Racing car sprays burning fuel into crowd.',
@@ -14,35 +14,51 @@ const data = [
 ];
 
 const siderStyle = {
-  padding:'1rem',
+  padding: '1rem',
 };
 const siderCard = {
-  marginBottom:'1rem',
+  marginBottom: '1rem',
 }
 
 
 // компонент сайдбара
-export default function AppSider() {
+export default function AppSider () {
 
   // лоадер пока загружаются данные и ассеты
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState( false )
   // массив с инфой с данными
   const [crypto, setCrypto] = useState()
   // массив с инфой с ассетами
   const [assets, setAssets] = useState()
-  
-  useEffect(() => {
+
+  useEffect( () => {
     // запрашиваем загрузку данных актуальных (данные) и имеющихся валют (ассеты)
-    async function preloadCryptoData() {
-      setLoading(true)
+    async function preloadCryptoData () {
+      setLoading( true )
       const {result} = await fakeFetchCrypto()
       const assets = await fetchAssets()
-      setAssets(assets)
-      setCrypto(result)
-      setLoading(false)
+      setAssets( assets.map( asset => {
+
+        const coin = result.find( (c) => c.id === asset.id )
+
+        return {
+          grow: asset.price < coin.price,
+          growPercent: percentDifference( asset.price, coin.price ),
+          totalAmount: asset.amount * coin.price,
+          totalProfit: asset.amount * coin.price - asset.amount * asset.price,
+          ...asset
+        }
+      } ) )
+      setCrypto( result )
+      setLoading( false )
     }
+
     preloadCryptoData()
-  }, []);
+  }, [] );
+
+  if (loading) {
+    return <Spin fullscreen/>
+  }
 
   return (
     <Layout.Sider
@@ -54,12 +70,12 @@ export default function AppSider() {
           title = "Active"
           value = {11.28}
           precision = {2}
-          valueStyle = {{color:'#3f8600'}}
+          valueStyle = {{color: '#3f8600'}}
           prefix = {<ArrowUpOutlined/>}
           suffix = "%"
         />
         <List
-          size="small"
+          size = "small"
           dataSource = {data}
           renderItem = {(item) => (
             <List.Item>
@@ -74,7 +90,7 @@ export default function AppSider() {
           title = "Idle"
           value = {9.3}
           precision = {2}
-          valueStyle = {{color:'#cf1322'}}
+          valueStyle = {{color: '#cf1322'}}
           prefix = {<ArrowDownOutlined/>}
           suffix = "%"
         />
