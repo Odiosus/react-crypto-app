@@ -5,14 +5,6 @@ import { fakeFetchCrypto, fetchAssets } from "../../api.js";
 import percentDifference from "../../utils.js";
 
 
-const data = [
-  'Racing car sprays burning fuel into crowd.',
-  'Japanese princess to wed commoner.',
-  'Australian walks 100km after outback crash.',
-  'Man charged over missing wedding girl.',
-  'Los Angeles battles huge wildfires.',
-];
-
 const siderStyle = {
   padding: '1rem',
 };
@@ -67,7 +59,7 @@ export default function AppSider () {
       width = "25%"
       style = {siderStyle}
     >
-      {assets.map( asset => (
+      {assets?.map( (asset) => (
         <Card
           key = {asset.id}
           style = {siderCard}
@@ -88,26 +80,21 @@ export default function AppSider () {
           />
           <List
             size = "small"
-            dataSource = {data}
+            dataSource = {[
+              {title: 'Total Profit', value: asset.totalProfit},
+              {title: 'Asset Amount', value: asset.amount},
+              {title: 'Difference', value: asset.growPercent}
+            ]}
             renderItem = {(item) => (
               <List.Item>
-                <Typography.Text mark>[ITEM]</Typography.Text> {item}
+                <span>{item.title}</span>
+                <span>{item.value}</span>
+                {/*<Typography.Text mark>[ITEM]</Typography.Text> {item}*/}
               </List.Item>
             )}
           />
         </Card>
       ) )}
-
-      {/*<Card style = {siderCard}>
-        <Statistic
-          title = "Idle"
-          value = {9.3}
-          precision = {2}
-          valueStyle = {{color: '#cf1322'}}
-          prefix = {<ArrowDownOutlined/>}
-          suffix = "%"
-        />
-      </Card>*/}
     </Layout.Sider>
   )
 }
