@@ -1,8 +1,8 @@
-import { Layout, Card, Statistic, List, Typography, Spin } from "antd";
+import { Layout, Card, Statistic, List, Typography, Spin, Tag } from "antd";
 import { ArrowUpOutlined, ArrowDownOutlined } from '@ant-design/icons';
 import { useEffect, useState } from "react";
 import { fakeFetchCrypto, fetchAssets } from "../../api.js";
-import percentDifference from "../../utils.js";
+import { percentDifference, capitalize } from "../../utils.js";
 
 
 const siderStyle = {
@@ -65,7 +65,7 @@ export default function AppSider () {
           style = {siderCard}
         >
           <Statistic
-            title = {asset.id}
+            title = {capitalize( asset.id )}
             value = {asset.totalAmount}
             precision = {2}
             valueStyle = {{
@@ -81,25 +81,34 @@ export default function AppSider () {
           <List
             size = "small"
             dataSource = {[
-              {title: 'Total Profit', value: asset.totalProfit},
+              {title: 'Total Profit', value: asset.totalProfit, withTag: true},
               {title: 'Asset Amount', value: asset.amount, isPlain: true},
-              {title: 'Difference', value: asset.growPercent}
             ]}
             renderItem = {(item) => (
               <List.Item>
-                <span>{item.title}</span>
+                <span>
+                  {item.title}
+                </span>
+                <span>
+                  {item.withTag && (
+                    <Tag
+                      color = {asset.grow
+                        ? 'green'
+                        : 'red'}
+                    >
+                      {asset.growPercent}%
+                    </Tag>)}
 
-                {item.isPlain && <span>{item.value}</span>}
-                {!item.isPlain && (
-                  <Typography.Text
-                    type = {asset.grow
-                      ? 'success'
-                      : 'danger'}>
-                    {item.value.toFixed( 2 )} $
-                  </Typography.Text>
-                )}
-
-                {/*<Typography.Text mark>[ITEM]</Typography.Text> {item}*/}
+                  {item.isPlain && item.value}
+                  {!item.isPlain && (
+                    <Typography.Text
+                      type = {asset.grow
+                        ? 'success'
+                        : 'danger'}>
+                      {item.value.toFixed( 2 )} $
+                    </Typography.Text>
+                  )}
+                </span>
               </List.Item>
             )}
           />
