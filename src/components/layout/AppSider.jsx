@@ -39,6 +39,7 @@ export default function AppSider () {
       const assets = await fetchAssets()
       setAssets( assets.map( asset => {
 
+        // собираем данные о валютах
         const coin = result.find( (c) => c.id === asset.id )
 
         return {
@@ -56,6 +57,7 @@ export default function AppSider () {
     preloadCryptoData()
   }, [] );
 
+  // показываем загрузку пока не загружены данные
   if (loading) {
     return <Spin fullscreen/>
   }
@@ -65,27 +67,38 @@ export default function AppSider () {
       width = "25%"
       style = {siderStyle}
     >
-      <Card style = {siderCard}>
-        <Statistic
-          title = "Active"
-          value = {11.28}
-          precision = {2}
-          valueStyle = {{color: '#3f8600'}}
-          prefix = {<ArrowUpOutlined/>}
-          suffix = "%"
-        />
-        <List
-          size = "small"
-          dataSource = {data}
-          renderItem = {(item) => (
-            <List.Item>
-              <Typography.Text mark>[ITEM]</Typography.Text> {item}
-            </List.Item>
-          )}
-        />
-      </Card>
+      {assets.map( asset => (
+        <Card
+          key = {asset.id}
+          style = {siderCard}
+        >
+          <Statistic
+            title = {asset.id}
+            value = {asset.totalAmount}
+            precision = {2}
+            valueStyle = {{
+              color: asset.grow
+                ? '#3f8600'
+                : '#cf1322'
+            }}
+            prefix = {asset.grow
+              ? <ArrowUpOutlined/>
+              : <ArrowDownOutlined/>}
+            suffix = "$"
+          />
+          <List
+            size = "small"
+            dataSource = {data}
+            renderItem = {(item) => (
+              <List.Item>
+                <Typography.Text mark>[ITEM]</Typography.Text> {item}
+              </List.Item>
+            )}
+          />
+        </Card>
+      ) )}
 
-      <Card style = {siderCard}>
+      {/*<Card style = {siderCard}>
         <Statistic
           title = "Idle"
           value = {9.3}
@@ -94,7 +107,7 @@ export default function AppSider () {
           prefix = {<ArrowDownOutlined/>}
           suffix = "%"
         />
-      </Card>
+      </Card>*/}
     </Layout.Sider>
   )
 }
