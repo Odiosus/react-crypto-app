@@ -1,4 +1,4 @@
-import { Layout, Card, Statistic, List, Typography, Spin, Tag } from "antd";
+import { Layout, Card, Statistic, List, Typography, Tag } from "antd";
 import { ArrowUpOutlined, ArrowDownOutlined } from '@ant-design/icons';
 import { capitalize } from "../../utils.js";
 import { useContext } from "react";
@@ -15,12 +15,8 @@ const siderCard = {
 
 // компонент сайдбара
 export default function AppSider () {
-  const {loading, assets} = useContext( CryptoContext )
+  const {assets} = useContext( CryptoContext )
 
-  // показываем загрузку пока не загружены данные
-  if (loading) {
-    return <Spin fullscreen/>
-  }
 
   return (
     <Layout.Sider
