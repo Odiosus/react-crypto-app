@@ -1,8 +1,8 @@
 import { Layout, Card, Statistic, List, Typography, Spin, Tag } from "antd";
 import { ArrowUpOutlined, ArrowDownOutlined } from '@ant-design/icons';
-import { useEffect, useState } from "react";
-import { fakeFetchCrypto, fetchAssets } from "../../api.js";
-import { percentDifference, capitalize } from "../../utils.js";
+import { capitalize } from "../../utils.js";
+import { useContext } from "react";
+import CryptoContext from "../../context/crypto-context.jsx";
 
 
 const siderStyle = {
@@ -15,39 +15,7 @@ const siderCard = {
 
 // компонент сайдбара
 export default function AppSider () {
-
-  // лоадер пока загружаются данные и ассеты
-  const [loading, setLoading] = useState( false )
-  // массив с инфой с данными
-  const [crypto, setCrypto] = useState()
-  // массив с инфой с ассетами
-  const [assets, setAssets] = useState()
-
-  useEffect( () => {
-    // запрашиваем загрузку данных актуальных (данные) и имеющихся валют (ассеты)
-    async function preloadCryptoData () {
-      setLoading( true )
-      const {result} = await fakeFetchCrypto()
-      const assets = await fetchAssets()
-      setAssets( assets.map( asset => {
-
-        // собираем данные о валютах
-        const coin = result.find( (c) => c.id === asset.id )
-
-        return {
-          grow: asset.price < coin.price,
-          growPercent: percentDifference( asset.price, coin.price ),
-          totalAmount: asset.amount * coin.price,
-          totalProfit: asset.amount * coin.price - asset.amount * asset.price,
-          ...asset
-        }
-      } ) )
-      setCrypto( result )
-      setLoading( false )
-    }
-
-    preloadCryptoData()
-  }, [] );
+  const {loading, assets} = useContext( CryptoContext )
 
   // показываем загрузку пока не загружены данные
   if (loading) {
