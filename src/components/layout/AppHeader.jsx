@@ -1,5 +1,6 @@
 import { Button, Layout, Select, Space } from "antd";
 import { useCrypto } from "../../context/crypto-context.jsx";
+import { useEffect, useState } from "react";
 
 const headerStyle = {
   display: 'flex',
@@ -11,41 +12,35 @@ const headerStyle = {
   height: 60,
 };
 
-/*const options = [
-  {
-    label: 'China',
-    value: 'china',
-    emoji: '🇨🇳',
-    desc: 'China (中国)',
-  },
-  {
-    label: 'USA',
-    value: 'usa',
-    emoji: '🇺🇸',
-    desc: 'USA (美国)',
-  },
-  {
-    label: 'Japan',
-    value: 'japan',
-    emoji: '🇯🇵',
-    desc: 'Japan (日本)',
-  },
-  {
-    label: 'Korea',
-    value: 'korea',
-    emoji: '🇰🇷',
-    desc: 'Korea (韩国)',
-  },
-];*/
-
 
 export default function AppHeader () {
+
+  const [select, setSelect] = useState( false )
   const {crypto} = useCrypto()
+
+  useEffect( () => {
+    const handleKeyDown = event => {
+      if (event.code === 'Slash' && !event.target.matches( 'input, textarea' )) {
+        setSelect( (prev) => !prev )
+      }
+    }
+    document.addEventListener( 'keydown', handleKeyDown )
+    return () => document.removeEventListener( 'keydown', handleKeyDown )
+  }, [] );
+
+  function handleSelect (value) {
+
+  }
+
   return (
     <Layout.Header
       style={headerStyle}
     >
       <Select
+        title={'Раскрыть список (раскрыть клавишей "/")'}
+        open={select}
+        onClick={() => setSelect( (prev) => !prev )}
+        onSelect={handleSelect}
         style={{width: 250}}
         value={"press / to open"}
         options={crypto?.map( coin => ({
