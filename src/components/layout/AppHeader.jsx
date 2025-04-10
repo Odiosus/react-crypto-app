@@ -1,4 +1,4 @@
-import { Button, Layout, Select, Space } from "antd";
+import { Button, Layout, Modal, Select, Space } from "antd";
 import { useCrypto } from "../../context/crypto-context.jsx";
 import { useEffect, useState } from "react";
 
@@ -16,6 +16,7 @@ const headerStyle = {
 export default function AppHeader () {
 
   const [select, setSelect] = useState( false )
+  const [selectModal, setSelectModal] = useState( false )
   const {crypto} = useCrypto()
 
   useEffect( () => {
@@ -29,8 +30,9 @@ export default function AppHeader () {
   }, [] );
 
   function handleSelect (value) {
-
+    setSelectModal( true )
   }
+
 
   return (
     <Layout.Header
@@ -61,7 +63,16 @@ export default function AppHeader () {
         )}
       />
       <Button type="primary">Add Asset</Button>
-
+      <Modal
+        title="Basic Modal"
+        open={selectModal}
+        onCancel={() => setSelectModal( false )}
+        footer={null}
+      >
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+      </Modal>
     </Layout.Header>
   )
 }
