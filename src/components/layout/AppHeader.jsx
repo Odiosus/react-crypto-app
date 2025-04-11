@@ -2,6 +2,7 @@ import { Button, Layout, Modal, Select, Space, Drawer } from "antd";
 import { useCrypto } from "../../context/crypto-context.jsx";
 import { useEffect, useState } from "react";
 import CoinInfoModal from "../CoinInfoModal.jsx";
+import AddAssetForm from "../AddAssetForm.jsx";
 
 const headerStyle = {
   display: 'flex',
@@ -87,9 +88,7 @@ export default function AppHeader () {
         open={addInDrawerAsset}
         width={600}
       >
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
+        <AddAssetForm/>
       </Drawer>
     </Layout.Header>
   )
