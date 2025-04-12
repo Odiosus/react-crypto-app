@@ -20,7 +20,7 @@ export default function AppHeader () {
   const [select, setSelect] = useState( false )
   const [selectModal, setSelectModal] = useState( false )
   const [coin, setCoin] = useState( null )
-  const [addInDrawerAsset, setAddInDrawerAsset] = useState( false )
+  const [addInDrawerAsset, setAddInDrawerAsset] = useState( true )
   const {crypto} = useCrypto()
 
   useEffect( () => {
