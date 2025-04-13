@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Select, Space } from "antd";
+import { Divider, Flex, Select, Space, Typography } from "antd";
 import { useCrypto } from "../context/crypto-context.jsx";
 
 export default function AddAssetForm () {
@@ -10,6 +10,7 @@ export default function AddAssetForm () {
   if (!coin) {
     return (
       <Select
+        style={{width: '100%'}}
         onSelect={(v) => setCoin( crypto.find( (c) => c.id === v ) )}
         placeholder={"Select coin"}
         options={crypto?.map( coin => ({
@@ -33,6 +34,25 @@ export default function AddAssetForm () {
   }
 
   return (
-    <form action="">FORM ASSET</form>
+    <form action="">
+      <Flex
+        align='center'
+      >
+        <img
+          src={coin.icon}
+          alt={coin.name}
+          width={40}/>
+        <Typography.Title
+          level={2}
+          style={{
+            margin: 0,
+            paddingLeft: 10
+          }}
+        >
+          {coin.name}
+        </Typography.Title>
+      </Flex>
+      <Divider/>
+    </form>
   )
 }

@@ -87,6 +87,7 @@ export default function AppHeader () {
         onClose={() => setAddInDrawerAsset( false )}
         open={addInDrawerAsset}
         width={600}
+        destroyOnClose
       >
         <AddAssetForm/>
       </Drawer>
