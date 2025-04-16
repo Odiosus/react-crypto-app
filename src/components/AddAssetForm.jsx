@@ -34,9 +34,9 @@ export default function AddAssetForm () {
   }
 
   function onFinish (values) {
-    console.log('finish', values)
+    console.log( 'finish', values )
   }
-  
+
   return (
     <Form
       name="basic"
@@ -74,9 +74,13 @@ export default function AddAssetForm () {
       </Form.Item>
 
       <Form.Item
-        label="Password"
-        name="password"
-        rules={[{required: true, message: 'Please input your password!'}]}
+        label="Amount"
+        name="amount"
+        rules={[{
+          required: true,
+          type: 'number',
+          min: 0,
+          message: 'Please input your password!'}]}
       >
         <Input.Password/>
       </Form.Item>
