@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, Checkbox, Divider, Flex, Form, Input, Select, Space, Typography } from "antd";
+import { Button, Checkbox, Divider, Flex, Form, Input, InputNumber, Select, Space, Typography } from "antd";
 import { useCrypto } from "../context/crypto-context.jsx";
 
 export default function AddAssetForm () {
@@ -43,7 +43,7 @@ export default function AddAssetForm () {
       labelCol={{span: 4}}
       wrapperCol={{span: 10}}
       style={{maxWidth: 600}}
-      initialValues={}
+      // initialValues={}
       onFinish={onFinish}
     >
       <Flex
@@ -66,35 +66,47 @@ export default function AddAssetForm () {
       <Divider/>
 
       <Form.Item
-        label="Username"
-        name="username"
-        rules={[{required: true, message: 'Please input your username!'}]}
-      >
-        <Input/>
-      </Form.Item>
-
-      <Form.Item
         label="Amount"
         name="amount"
         rules={[{
           required: true,
           type: 'number',
           min: 0,
-          message: 'Please input your password!'}]}
+          message: 'Please input your password!'
+        }]}
       >
-        <Input.Password/>
+        <InputNumber/>
       </Form.Item>
 
-      <Form.Item name="remember"
-        valuePropName="checked"
-        label={null}>
-        <Checkbox>Remember me</Checkbox>
+      <Form.Item
+        label="Price"
+        name="price">
+        <InputNumber
+          disabled
+          style={{width: '100%'}}/>
+      </Form.Item>
+
+      <Form.Item
+        label="Date & Time"
+        name="date">
+        <InputNumber
+          disabled
+          style={{width: '100%'}}/>
+      </Form.Item>
+
+      <Form.Item
+        label="Total"
+        name="total">
+        <InputNumber
+          disabled
+          style={{width: '100%'}}/>
       </Form.Item>
 
       <Form.Item label={null}>
-        <Button type="primary"
+        <Button
+          type="primary"
           htmlType="submit">
-          Submit
+          Add Asset
         </Button>
       </Form.Item>
     </Form>
