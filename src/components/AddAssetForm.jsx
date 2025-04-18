@@ -1,6 +1,17 @@
 import { useState } from "react";
-import { Button, Checkbox, Divider, Flex, Form, Input, InputNumber, Select, Space, Typography } from "antd";
+import { Button, Checkbox, DatePicker, Divider, Flex, Form, Input, InputNumber, Select, Space, Typography } from "antd";
 import { useCrypto } from "../context/crypto-context.jsx";
+
+
+const validateMessages = {
+  required: "${label} is required!",
+  types: {
+    number: "${label} is not a valid number!",
+  },
+  number: {
+    range: "${label} must be between ${min} and ${max}",
+  }
+};
 
 export default function AddAssetForm () {
 
@@ -45,6 +56,7 @@ export default function AddAssetForm () {
       style={{maxWidth: 600}}
       // initialValues={}
       onFinish={onFinish}
+      validateMessages={validateMessages}
     >
       <Flex
         align='center'
@@ -72,7 +84,6 @@ export default function AddAssetForm () {
           required: true,
           type: 'number',
           min: 0,
-          message: 'Please input your password!'
         }]}
       >
         <InputNumber/>
@@ -89,9 +100,7 @@ export default function AddAssetForm () {
       <Form.Item
         label="Date & Time"
         name="date">
-        <InputNumber
-          disabled
-          style={{width: '100%'}}/>
+        <DatePicker showTime/>
       </Form.Item>
 
       <Form.Item
