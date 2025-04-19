@@ -54,7 +54,9 @@ export default function AddAssetForm () {
       labelCol={{span: 4}}
       wrapperCol={{span: 10}}
       style={{maxWidth: 600}}
-      // initialValues={}
+      initialValues={{
+      price: +coin.price.toFixed(2),
+      }}
       onFinish={onFinish}
       validateMessages={validateMessages}
     >
