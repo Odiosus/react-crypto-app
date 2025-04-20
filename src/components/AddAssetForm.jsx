@@ -15,6 +15,7 @@ const validateMessages = {
 
 export default function AddAssetForm () {
 
+  const [form] = Form.useForm();
   const {crypto} = useCrypto()
   const [coin, setCoin] = useState( null )
 
@@ -48,14 +49,28 @@ export default function AddAssetForm () {
     console.log( 'finish', values )
   }
 
+  /**
+   * Устанавливает поле «total» формы на основе текущего
+   *  значение поля 'amount' и 'price' выбранной
+   *  монеты.
+   *  @param {number} value - Текущее значение поля 'amount'.
+   */
+  function handleAmountChange (value) {
+    form.setFieldsValue( {
+      total: value * coin.price,
+    } )
+  }
+
   return (
     <Form
+      form={form}
       name="basic"
       labelCol={{span: 4}}
       wrapperCol={{span: 10}}
       style={{maxWidth: 600}}
       initialValues={{
-      price: +coin.price.toFixed(2),
+        // #TODO
+        price: +coin.price.toFixed( 2 ),
       }}
       onFinish={onFinish}
       validateMessages={validateMessages}
@@ -88,7 +103,10 @@ export default function AddAssetForm () {
           min: 0,
         }]}
       >
-        <InputNumber/>
+        <InputNumber
+          placeholder={"Enter coin amount"}
+          onChange={handleAmountChange}
+          style={{width: '100%'}}/>
       </Form.Item>
 
       <Form.Item
