@@ -56,8 +56,18 @@ export default function AddAssetForm () {
    *  @param {number} value - Текущее значение поля 'amount'.
    */
   function handleAmountChange (value) {
+    const price = form.getFieldValue( 'price' )
+
     form.setFieldsValue( {
-      total: value * coin.price,
+      total: +(value * price).toFixed( 2 ),
+    } )
+  }
+
+  function handlePriceChange (value) {
+    const amount = form.getFieldValue( 'amount' )
+
+    form.setFieldsValue( {
+      total: +(amount * value).toFixed( 2 ),
     } )
   }
 
@@ -81,7 +91,8 @@ export default function AddAssetForm () {
         <img
           src={coin.icon}
           alt={coin.name}
-          width={40}/>
+          width={40}
+        />
         <Typography.Title
           level={2}
           style={{
@@ -113,7 +124,7 @@ export default function AddAssetForm () {
         label="Price"
         name="price">
         <InputNumber
-          disabled
+          onChange={handlePriceChange}
           style={{width: '100%'}}/>
       </Form.Item>
 
