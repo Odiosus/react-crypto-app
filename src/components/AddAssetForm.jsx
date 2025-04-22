@@ -1,5 +1,18 @@
 import { useState } from "react";
-import { Button, Checkbox, DatePicker, Divider, Flex, Form, Input, InputNumber, Select, Space, Typography } from "antd";
+import {
+  Button,
+  Checkbox,
+  DatePicker,
+  Divider,
+  Flex,
+  Form,
+  Input,
+  InputNumber,
+  Result,
+  Select,
+  Space,
+  Typography
+} from "antd";
 import { useCrypto } from "../context/crypto-context.jsx";
 
 
@@ -13,11 +26,31 @@ const validateMessages = {
   }
 };
 
-export default function AddAssetForm () {
+export default function AddAssetForm ({onClose}) {
 
   const [form] = Form.useForm();
   const {crypto} = useCrypto()
   const [coin, setCoin] = useState( null )
+  const [submitted, setSubmitted] = useState( false )
+
+  if (submitted) {
+    return (
+      <Result
+        status="success"
+        title="New Asset Added Successfully"
+        subTitle={`Added ${coin.name} to your assets.`}
+        extra={[
+          <Button
+            type="primary"
+            key="console"
+            onClick={onClose}
+          >
+            Close
+          </Button>,
+        ]}
+      />
+    )
+  }
 
   if (!coin) {
     return (
