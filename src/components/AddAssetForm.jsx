@@ -80,6 +80,8 @@ export default function AddAssetForm ({onClose}) {
 
   function onFinish (values) {
     console.log( 'finish', values )
+
+    setSubmitted( true )
   }
 
   /**
