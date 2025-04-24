@@ -14,6 +14,7 @@ import {
   Typography
 } from "antd";
 import { useCrypto } from "../context/crypto-context.jsx";
+import CoinInfo from "./layout/CoinInfo.jsx";
 
 
 const validateMessages = {
@@ -80,7 +81,6 @@ export default function AddAssetForm ({onClose}) {
 
   function onFinish (values) {
     console.log( 'finish', values )
-
     setSubmitted( true )
   }
 
@@ -120,24 +120,7 @@ export default function AddAssetForm ({onClose}) {
       onFinish={onFinish}
       validateMessages={validateMessages}
     >
-      <Flex
-        align='center'
-      >
-        <img
-          src={coin.icon}
-          alt={coin.name}
-          width={40}
-        />
-        <Typography.Title
-          level={2}
-          style={{
-            margin: 0,
-            paddingLeft: 10
-          }}
-        >
-          {coin.name}
-        </Typography.Title>
-      </Flex>
+      <CoinInfo coin={coin}/>
       <Divider/>
 
       <Form.Item
