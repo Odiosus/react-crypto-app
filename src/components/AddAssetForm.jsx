@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import {
   Button,
   Checkbox,
@@ -33,13 +33,14 @@ export default function AddAssetForm ({onClose}) {
   const {crypto} = useCrypto()
   const [coin, setCoin] = useState( null )
   const [submitted, setSubmitted] = useState( false )
+  const assetRef = useRef();
 
   if (submitted) {
     return (
       <Result
         status="success"
         title="New Asset Added Successfully"
-        subTitle={`Added ${coin.name} to your assets.`}
+        subTitle={`Added ${assetRef.current.amount} of ${coin.name} by price ${assetRef.current.price}.`}
         extra={[
           <Button
             type="primary"
@@ -87,6 +88,7 @@ export default function AddAssetForm ({onClose}) {
       price: values.price,
       date: values.date?.$d ?? new Date(),
     }
+    assetRef.current = newAsset
     setSubmitted( true )
   }
 
